@@ -62,7 +62,48 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
   }
 });
 
-const h1 = document.querySelector('h1');
+//Tabbed component
+
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContent = document.querySelectorAll('.operations__content');
+const tabsContainer = document.querySelector('.operations__tab-container');
+
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+
+  if (!clicked) return;
+
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  clicked.classList.add('operations__tab--active');
+
+  //removing the class name
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+
+  //display content
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
+
+// tabs.forEach(t => {
+//   t.childNodes.forEach(childNode =>
+//     childNode.addEventListener('click', e => e.stopPropagation())
+//   );
+
+//   t.addEventListener('click', function (e) {
+//     tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+
+//     e.target.classList.add('operations__tab--active');
+
+//     tabsContent.forEach(c =>
+//       c.classList.forEach(className =>
+//         className.includes(e.target.dataset.tab)
+//           ? c.classList.add('operations__content--active')
+//           : c.classList.remove('operations__content--active')
+//       )
+//     );
+//   });
+// });
 
 // const randomInt = (min, max) =>
 //   Math.floor(Math.random() * (max - min + 1) + min);
