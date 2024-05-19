@@ -1,14 +1,18 @@
 'use strict';
 
 ///////////////////////////////////////
-// Modal window
 
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContent = document.querySelectorAll('.operations__content');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const nav = document.querySelector('.nav');
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const header = document.querySelector('.header');
 
+// Modal window
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -63,11 +67,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 });
 
 //Tabbed component
-
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContent = document.querySelectorAll('.operations__content');
-const tabsContainer = document.querySelector('.operations__tab-container');
-
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
 
@@ -85,40 +84,17 @@ tabsContainer.addEventListener('click', function (e) {
     .classList.add('operations__content--active');
 });
 
-// tabs.forEach(t => {
-//   t.childNodes.forEach(childNode =>
-//     childNode.addEventListener('click', e => e.stopPropagation())
-//   );
+// hover link
+const eventHandler = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = e.target.closest('.nav').querySelectorAll('.nav__link');
+    const logo = e.target.closest('.nav').querySelector('img');
 
-//   t.addEventListener('click', function (e) {
-//     tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+    siblings.forEach(s => s !== link && (s.style.opacity = this));
 
-//     e.target.classList.add('operations__tab--active');
-
-//     tabsContent.forEach(c =>
-//       c.classList.forEach(className =>
-//         className.includes(e.target.dataset.tab)
-//           ? c.classList.add('operations__content--active')
-//           : c.classList.remove('operations__content--active')
-//       )
-//     );
-//   });
-// });
-
-// const randomInt = (min, max) =>
-//   Math.floor(Math.random() * (max - min + 1) + min);
-
-// const randomColor = () =>
-//   `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
-
-// document.querySelector('.nav__link').addEventListener('click', function (e) {
-//   this.style.backgroundColor = randomColor();
-// });
-
-// document.querySelector('.nav__links').addEventListener('click', function (e) {
-//   this.style.backgroundColor = randomColor();
-// });
-
-// document.querySelector('.nav').addEventListener('click', function (e) {
-//   this.style.backgroundColor = randomColor();
-// });
+    logo.style.opacity = this;
+  }
+};
+nav.addEventListener('mouseover', eventHandler.bind(0.5));
+nav.addEventListener('mouseout', eventHandler.bind(1));
