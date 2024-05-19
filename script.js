@@ -98,3 +98,10 @@ const eventHandler = function (e) {
 };
 nav.addEventListener('mouseover', eventHandler.bind(0.5));
 nav.addEventListener('mouseout', eventHandler.bind(1));
+
+const initialCoords = section1.getBoundingClientRect();
+
+window.addEventListener('scroll', function () {
+  if (initialCoords.top < window.scrollY) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+});
