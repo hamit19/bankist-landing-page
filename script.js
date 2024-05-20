@@ -96,12 +96,20 @@ const eventHandler = function (e) {
     logo.style.opacity = this;
   }
 };
-nav.addEventListener('mouseover', eventHandler.bind(0.5));
-nav.addEventListener('mouseout', eventHandler.bind(1));
 
-const initialCoords = section1.getBoundingClientRect();
+const navHeight = nav.getBoundingClientRect().height;
+const stickyNav = function (entries) {
+  const [entry] = entries;
 
-window.addEventListener('scroll', function () {
-  if (initialCoords.top < window.scrollY) nav.classList.add('sticky');
-  else nav.classList.remove('sticky');
+  !entry.isIntersecting
+    ? nav.classList.add('sticky')
+    : nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
 });
+
+headerObserver.observe(header);
