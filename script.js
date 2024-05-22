@@ -113,3 +113,34 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 });
 
 headerObserver.observe(header);
+
+// Revealing Sections
+
+const revalSectionOptions = {
+  root: null,
+  threshold: 0.15,
+};
+
+const revealSection = function (entries) {
+  const [entry] = entries;
+
+  console.log(entry);
+
+  if (!entry.isIntersecting) return;
+
+  entry.target.classList.remove('section--hidden');
+
+  sectionObserver.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(
+  revealSection,
+  revalSectionOptions
+);
+
+const sections = document.querySelectorAll('section');
+
+sections.forEach(section => {
+  section.classList.add('section--hidden');
+  sectionObserver.observe(section);
+});
