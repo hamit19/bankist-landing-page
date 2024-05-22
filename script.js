@@ -124,8 +124,6 @@ const revalSectionOptions = {
 const revealSection = function (entries) {
   const [entry] = entries;
 
-  console.log(entry);
-
   if (!entry.isIntersecting) return;
 
   entry.target.classList.remove('section--hidden');
@@ -143,4 +141,37 @@ const sections = document.querySelectorAll('section');
 sections.forEach(section => {
   section.classList.add('section--hidden');
   sectionObserver.observe(section);
+});
+
+// Lazy Loading Images
+
+const lazyLoading = function (entries) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  entry.target.src = entry.target.dataset.src;
+
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  imagesObserver.unobserve(entry.target);
+};
+
+const lazyLoadingOptions = {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px',
+};
+
+const imagesObserver = new IntersectionObserver(
+  lazyLoading,
+  lazyLoadingOptions
+);
+
+const images = document.querySelectorAll('img[data-src]');
+
+images.forEach(image => {
+  imagesObserver.observe(image);
 });
